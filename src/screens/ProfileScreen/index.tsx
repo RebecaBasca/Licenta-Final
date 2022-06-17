@@ -1,4 +1,4 @@
-import profilePicture from '../../assets/images/profile.png';
+import profilePicture from '../../assets/images/profile2.png';
 import './table.css';
 import {CommonHeaderProps, CommonTableProps} from "./types";
 import {useProfileScreen} from "./hooks";
@@ -35,7 +35,7 @@ const ProfileScreen = () => {
             <div
                 style={{
                     backgroundColor: '#DDBEA8',
-                    height: 200,
+                    height: 120,
                     display: 'flex',
                     alignItems: 'flex-end',
                     paddingLeft: 100,
@@ -214,7 +214,7 @@ const CommonHeader = ({ title }: CommonHeaderProps) => {
         <div
             style={{
                 background: 'rgba(54, 143, 139, 0.36)',
-                height: 130,
+                height: 100,
                 width: 650,
                 display: 'flex',
                 alignItems: 'center',

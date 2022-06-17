@@ -1,5 +1,5 @@
 import React from "react";
-import profilePicture from "../../assets/images/profile.png";
+import profilePicture from "../../assets/images/profile2.png";
 import {CommonHeaderProps, CommonTableProps} from "../ProfileScreen/types";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Button, MenuItem, Select} from "@mui/material";

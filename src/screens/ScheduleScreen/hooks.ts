@@ -119,12 +119,10 @@ export const useScheduleScreen = () => {
     const selectCurrentHour = (idx: number) => {
         setSelectedHour(idx);
 
-        // TODO: Temporary, after we will update it, when we connect with the backend
         setNewValue('selectedHour', availableHours[idx]);
     }
 
     const setCurrentSelect = useCallback((value: any, name: string) => {
-        // There are only 2 selects
         if(name === 'service') {
             setService(value);
             const myService: any = services.find((x: any) => x.id === value);

@@ -37,6 +37,7 @@ const HomeScreen = () => {
             height: 500,
             width: 900,
             marginRight: '-50%',
+            marginTop: '20px',
             minWidth: 500,
             minHeight: 400,
             background: 'rgba(243,223,193,0.94)',
@@ -68,11 +69,11 @@ const HomeScreen = () => {
             variants: [
                 {
                     name: "Da",
-                    value: 1
+                    value: 2
                 },
                 {
                     name: "Nu",
-                    value: 0
+                    value: 1
                 }
             ]
         },
@@ -133,11 +134,15 @@ const HomeScreen = () => {
             variants: [
                 {
                     name: "Feminin",
-                    value: 1
+                    value: 0
                 },
                 {
                     name: "Masculin",
-                    value: 0
+                    value: 1
+                },
+                {
+                    name: "Altul",
+                    value: 2
                 }
             ]
         },
@@ -159,15 +164,15 @@ const HomeScreen = () => {
             variants: [
                 {
                     name: "18-30",
-                    value: 2
-                },
-                {
-                    name: "30-50",
                     value: 1
                 },
                 {
-                    name: "50+",
-                    value: 0
+                    name: "30-65",
+                    value: 2
+                },
+                {
+                    name: "66+",
+                    value: 3
                 }
             ]
         },
@@ -209,27 +214,46 @@ const HomeScreen = () => {
 
     useEffect(() => {
         let ans = "Psihoterapie individuala";
+        let data: any = {};
+
         selectedAnswers.map((item: any, idx: any) => {
-            console.log("---------------------------------------step",item.questionStep,"------------------answer",item.answer)
+            if(item.questionStep === 0 || item.questionStep === 1 || item.questionStep === 6 || item.questionStep === 7 || item.questionStep === 8 ||  item.questionStep === 9){
+                data[item.questionStep] = item.answer;
+            }
+
 
             if(item.questionStep === 4 && item.answer) {
                 ans = "Consiliere parentala";
-                // eslint-disable-next-line array-callback-return
                 return ;
             } else if(item.questionStep === 1) {
                 ans = "Psihoterapie de cuplu";
-                // eslint-disable-next-line array-callback-return
                 return ;
             } else if(item.questionStep === 0)  {
                 ans = "Logopedie";
-                // eslint-disable-next-line array-callback-return
                 return;
             } else {
                 ans = "Psihoterapie individuala";
-                // eslint-disable-next-line array-callback-return
                 return;
             }
         });
+
+
+
+        data["Age"] = data[0];
+        delete data[0];
+        data["Gender"] = data[6];
+        delete data[6];
+        data["seek_help"] = data[1];
+        delete data[1];
+        data["family_history"] = data[7];
+        delete data[7];
+        data["age_range"] = data[8];
+        delete data[8];
+        data["treatment"] = data[9];
+        delete data[9];
+
+
+        console.log(data, "------------------------------")
 
         setCurrentAnswer(ans);
     }, [selectedAnswers]);
@@ -254,7 +278,7 @@ const HomeScreen = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     flex: 1,
-                    height: '100%',
+                    height: '90%',
                     textAlign: 'center'
                 }}
               >
@@ -503,10 +527,10 @@ const HomeScreen = () => {
                         <Button
                             variant="outlined"
                             style={{
-                                backgroundColor: `#fff`,
+                                backgroundColor: `#368F8B`,
                                 borderColor: '#368F8B',
                                 borderWidth: 3,
-                                color: '#2F2E41',
+                                color: 'white',
                                 borderRadius: 20,
                                 paddingLeft: 23,
                                 paddingRight: 23,
@@ -568,10 +592,10 @@ const HomeScreen = () => {
                                 <Button
                                     variant="outlined"
                                     style={{
-                                        backgroundColor: `#fff`,
+                                        backgroundColor: `#368F8B`,
                                         borderColor: '#368F8B',
-                                        color: '#2F2E41',
-                                        borderRadius: 11,
+                                        color: 'white',
+                                        borderRadius: 20,
                                         paddingLeft: 23,
                                         paddingRight: 23,
                                         marginBottom: 20,
@@ -593,6 +617,7 @@ const HomeScreen = () => {
                         display="flex"
                         justifyContent="space-between"
                         alignItems="center"
+                        marginTop={"100px"}
                     >
                         <Box>
                             <img src={leftSchedule} alt=""/>

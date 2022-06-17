@@ -271,12 +271,12 @@ const ScheduleScreen = () => {
                                 </Box>
                             </Box>
 
-                            <Box style={{ textAlign: 'center', paddingTop: 20 }}>
+                            <Box style={{ textAlign: 'center', paddingTop: 20 , marginTop: '-50px'}}>
                                 <Button
                                     variant="outlined"
                                     style={{
                                         backgroundColor: `#fff`,
-                                        borderColor: '#2F2E41',
+                                        borderColor: 'transparent',
                                         color: '#2F2E41',
                                         borderRadius: 11,
                                         paddingLeft: 23,

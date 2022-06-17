@@ -41,7 +41,7 @@ const ServiceScreen = () => {
                                         <h1>{serviceItem.name}</h1>
                                     </div>
                                 </div>
-                                <div>
+                                <div style={{textAlign: 'justify'}}>
                                     {
                                         serviceItem.items.map((item: any, jdx: any) => (
                                             <ContentImage
