@@ -16,6 +16,7 @@ import bottomSchedule from '../../assets/images/homescreen/bottomHomepage.png';
 import TeamItem from "../../components/TeamItem";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import InputComponent from "../../components/InputComponent";
+import {getFormData} from "../../api/flask-formdata";
 
 const HomeScreen = () => {
 
@@ -214,14 +215,8 @@ const HomeScreen = () => {
 
     useEffect(() => {
         let ans = "Psihoterapie individuala";
-        let data: any = {};
 
         selectedAnswers.map((item: any, idx: any) => {
-            if(item.questionStep === 0 || item.questionStep === 1 || item.questionStep === 6 || item.questionStep === 7 || item.questionStep === 8 ||  item.questionStep === 9){
-                data[item.questionStep] = item.answer;
-            }
-
-
             if(item.questionStep === 4 && item.answer) {
                 ans = "Consiliere parentala";
                 return ;
@@ -238,6 +233,20 @@ const HomeScreen = () => {
         });
 
 
+        setCurrentAnswer(ans);
+    }, [selectedAnswers]);
+
+
+
+
+    useEffect(() => {
+        let data: any = {};
+
+        selectedAnswers.map((item: any, idx: any) => {
+            if(item.questionStep === 0 || item.questionStep === 1 || item.questionStep === 6 || item.questionStep === 7 || item.questionStep === 8 ||  item.questionStep === 9){
+                data[item.questionStep] = item.answer;
+            }
+        });
 
         data["Age"] = data[0];
         delete data[0];
@@ -253,10 +262,13 @@ const HomeScreen = () => {
         delete data[9];
 
 
-        console.log(data, "------------------------------")
+        if(questionStep === 10){
+            console.log(data, "------------------------------");
+            getFormData(JSON.stringify(data));
+        }
 
-        setCurrentAnswer(ans);
     }, [selectedAnswers]);
+
 
 
 
