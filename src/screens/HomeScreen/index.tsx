@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Box, Grid} from "@mui/material";
 import firstImage from '../../assets/images/image 3.png';
 import secondImage from '../../assets/images/3918491 1.png';
@@ -17,6 +17,7 @@ import TeamItem from "../../components/TeamItem";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import InputComponent from "../../components/InputComponent";
 import {getFormData} from "../../api/flask-formdata";
+import axios from 'axios';
 
 const HomeScreen = () => {
 
@@ -66,19 +67,6 @@ const HomeScreen = () => {
             isAge: true
         },
         {
-            question: "Ati mai apelat la servicii de specialitate?",
-            variants: [
-                {
-                    name: "Da",
-                    value: 2
-                },
-                {
-                    name: "Nu",
-                    value: 1
-                }
-            ]
-        },
-        {
             question: "Aveti nevoie de ajutor pentru rezolvarea unor tulburari ale limbajului?",
             variants: [
                 {
@@ -96,11 +84,11 @@ const HomeScreen = () => {
             variants: [
                 {
                     name: "Cu scop personal",
-                    value: 1
+                    value: 0
                 },
                 {
                     name: "Pentru relatia de cuplu",
-                    value: 0
+                    value: 1
                 }
             ]
         },
@@ -161,6 +149,19 @@ const HomeScreen = () => {
             ]
         },
         {
+            question: "Ati mai apelat la servicii de specialitate?",
+            variants: [
+                {
+                    name: "Da",
+                    value: 2
+                },
+                {
+                    name: "Nu",
+                    value: 1
+                }
+            ]
+        },
+        {
             question: "In ce categorie de varsta va incadrati?",
             variants: [
                 {
@@ -190,12 +191,13 @@ const HomeScreen = () => {
                 }
             ]
         },
-        {
-            question: "Pentru cele mai bune rezultate, va sugeram ca primul pas sa fie o programare pentru o:",
-            isAnswer: true,
-            variants: []
+         {
+             isAnswer: true,
+             variants: []
         }
     ];
+
+    const [q10, setQ10] = useState("");
 
     const [selectedAnswers, setSelectedAnswers] = useState<any>([]);
 
@@ -213,6 +215,12 @@ const HomeScreen = () => {
         setQuestionStep(prevState => prevState + 1);
     }
 
+
+    const [response, setresponse] = useState({
+        res: 2
+    });
+
+
     useEffect(() => {
         let ans = "Psihoterapie individuala";
 
@@ -220,19 +228,17 @@ const HomeScreen = () => {
             if(item.questionStep === 4 && item.answer) {
                 ans = "Consiliere parentala";
                 return ;
-            } else if(item.questionStep === 1) {
-                ans = "Psihoterapie de cuplu";
-                return ;
-            } else if(item.questionStep === 0)  {
+            } else if(item.questionStep === 1 && item.answer) {
                 ans = "Logopedie";
+                return ;
+            } else if(item.questionStep === 2 && item.answer)  {
+                ans = "Psihoterapie de cuplu";
                 return;
             } else {
                 ans = "Psihoterapie individuala";
                 return;
             }
         });
-
-
         setCurrentAnswer(ans);
     }, [selectedAnswers]);
 
@@ -243,31 +249,45 @@ const HomeScreen = () => {
         let data: any = {};
 
         selectedAnswers.map((item: any, idx: any) => {
-            if(item.questionStep === 0 || item.questionStep === 1 || item.questionStep === 6 || item.questionStep === 7 || item.questionStep === 8 ||  item.questionStep === 9){
+            if(item.questionStep === 0 || item.questionStep === 5 || item.questionStep === 6 || item.questionStep === 7 || item.questionStep === 8 ){
                 data[item.questionStep] = item.answer;
             }
         });
 
         data["Age"] = data[0];
         delete data[0];
-        data["Gender"] = data[6];
+        data["Gender"] = data[5];
+        delete data[5];
+        data["family_history"] = data[6];
         delete data[6];
-        data["seek_help"] = data[1];
-        delete data[1];
-        data["family_history"] = data[7];
+        data["seek_help"] = data[7];
         delete data[7];
         data["age_range"] = data[8];
         delete data[8];
-        data["treatment"] = data[9];
-        delete data[9];
 
+        if(questionStep === 9){
+            getFormData(JSON.stringify(data))
+                .then((response: any) => {
+                    const { data: dataResponse } = response;
+                    setresponse((prevState) => ({
+                        ...prevState,
+                        res: dataResponse
+                    }));
 
-        if(questionStep === 10){
-            console.log(data, "------------------------------");
-            getFormData(JSON.stringify(data));
+                    if(dataResponse === 1){
+                        setQ10( "Ar fi de folos să apelați la servicii de specialitate sau să începeți o terapie. Pentru cele mai bune rezultate, vă sugerăm ca primul pas sa fie o programare pentru o:");
+                    }
+                    else{
+                        setQ10( "Nu este necesară începerea unei terapii, dar pentru o discuție cu un specialist, puteți realiza o programare pentru o:");
+                    }
+
+                })
+
         }
+        questions[10].question = q10;
 
     }, [selectedAnswers]);
+
 
 
 
@@ -294,11 +314,11 @@ const HomeScreen = () => {
                     textAlign: 'center'
                 }}
               >
-                  <h2 style={{ color: questions[questionStep]?.isAnswer ? '#000' : '#fff', marginTop: 60, fontSize: '40px' }}>{ questions[questionStep].question }</h2>
+                  <h2 style={{ color: questions[questionStep]?.isAnswer ? '#000' : '#fff', marginTop: 60, fontSize: '40px' }}>{ questions[questionStep]?.isAnswer ? q10 : questions[questionStep].question }</h2>
                   {
                       questions[questionStep]?.isAnswer ?
                           <div style={{ textAlign: "center", height: '100%', display: 'flex', flexDirection: 'column' }}>
-                              <div style={{ marginTop: 70 }}>
+                              <div>
                                   <h1 style={{ color: '#fff' }}>{currentAnswer}</h1>
                               </div>
                               <div
