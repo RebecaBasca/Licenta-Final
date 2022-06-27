@@ -485,7 +485,7 @@ const HomeScreen = () => {
                     >
                         <h1 style={{ fontWeight: 400 }}>Despre cabinet</h1>
                         <p style={{ maxWidth: 270 }}>
-                            Cabinetul de PsihologicAnca Nicoli oferă servicii de psihologie pentru copii și adulți: evaluare psihologică, dezvoltare personală, logopedie, terapie de familie, de cuplu, consiliere, psihoterapia persoanelor aflate în dificultate. Ședințele de terapiile se pot desfășura atât la nivel individual, cât și la nivel familial, de cuplu sau de grup.
+                            Cabinetul individual de logopedie și psihoterapie Anca Nicoli oferă servicii de psihologie pentru copii și adulți: evaluare psihologică, dezvoltare personală, logopedie, terapie de familie, de cuplu, consiliere, psihoterapia persoanelor aflate în dificultate. Ședințele de terapiile se pot desfășura atât la nivel individual, cât și la nivel familial, de cuplu sau de grup.
                         </p>
                     </Box>
                     <Box

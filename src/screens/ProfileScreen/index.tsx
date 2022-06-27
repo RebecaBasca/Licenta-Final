@@ -67,7 +67,7 @@ const ProfileScreen = () => {
                                     editableFields.name ? (
                                         <div>
                                             <InputComponent
-                                                placeholder="Nume si prenume"
+                                                placeholder="Nume și prenume"
                                                 style={{
                                                     minWidth: 320
                                                 }}
@@ -160,7 +160,7 @@ const ProfileScreen = () => {
             >
                 <div>
                     <CommonHeader
-                        title="Programari anterioare"
+                        title="Programări anterioare"
                     />
 
                     <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -173,7 +173,7 @@ const ProfileScreen = () => {
 
                 <div>
                     <CommonHeader
-                        title="Programari viitoare"
+                        title="Programări viitoare"
                     />
 
                     <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
